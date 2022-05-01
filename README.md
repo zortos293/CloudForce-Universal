@@ -8,11 +8,11 @@ the use case of Cloudforce Unversal are
 
 
 Features that are gonna be added
-- [] Fleunt Download
-- [] Automatic Updater
-- [] Portable Mode 
-- [] Installer Mode (Automatic install)
-- [] Windows Tools (Cleanup,Debloat)
-- [] Grab App list from Site (Async)
+- [ ] Fleunt Download
+- [ ] Automatic Updater
+- [ ] Portable Mode 
+- [ ] Installer Mode (Automatic install)
+- [ ] Windows Tools (Cleanup,Debloat)
+- [ ] Grab App list from Site (Async)
 
 
