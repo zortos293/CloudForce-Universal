@@ -1,0 +1,54 @@
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.exe.config
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.exe
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.pdb
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Guna.UI2.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.SuggestedBindingRedirects.cache
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.Form1.resources
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.Properties.Resources.resources
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.CopyComplete
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.exe
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.pdb
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\SharpCompress.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Buffers.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Memory.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Text.Encoding.CodePages.dll
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Buffers.xml
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Memory.xml
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Administrator\source\repos\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Text.Encoding.CodePages.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.exe.config
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.exe
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Cloudforce.pdb
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Guna.UI2.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\SharpCompress.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Buffers.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Memory.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Text.Encoding.CodePages.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Buffers.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Memory.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\System.Text.Encoding.CodePages.xml
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.AssemblyReference.cache
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.SuggestedBindingRedirects.cache
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.Form1.resources
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.Properties.Resources.resources
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.GenerateResource.cache
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.csproj.CopyComplete
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.exe
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.pdb
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Resources\NunitoSans-Bold.ttf
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Resources\NunitoSans-Regular.ttf
