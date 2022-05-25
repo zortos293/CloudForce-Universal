@@ -7,3 +7,15 @@ the use case of Cloudforce Unversal are
 - Running Software on usb stick (All your needs in a usb stick)
 
 
+Features that are gonna be added
+- [x] Fleunt Download
+- [ ] Automatic Updater
+- [ ] Portable Mode 
+- [ ] Hidden Mode (Hide as Notepad.exe, Change Title)
+- [ ] Installer Mode (Automatic install)
+- [ ] Windows Tools (Cleanup,Debloat)
+- [x] Grab App list from Site (Async)
+- [x] Detect Cloud Service (GFN, Boosteroid)
+- [ ] Special Tools For Cloud Services
+
+
