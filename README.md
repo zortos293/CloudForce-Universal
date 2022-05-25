@@ -8,14 +8,14 @@ the use case of Cloudforce Unversal are
 
 
 Features that are gonna be added
-- [ ] Fleunt Download
+- [x] Fleunt Download
 - [ ] Automatic Updater
 - [ ] Portable Mode 
 - [ ] Hidden Mode (Hide as Notepad.exe, Change Title)
 - [ ] Installer Mode (Automatic install)
 - [ ] Windows Tools (Cleanup,Debloat)
 - [x] Grab App list from Site (Async)
-- [ ] Detect Cloud Service (GFN, Boosteroid)
+- [x] Detect Cloud Service (GFN, Boosteroid)
 - [ ] Special Tools For Cloud Services
 
 
