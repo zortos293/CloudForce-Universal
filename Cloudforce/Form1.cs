@@ -29,6 +29,7 @@ namespace Cloudforce
            
         }
         #region JSON/DYNAMIC Stuff
+        int AllAppsCount; 
         public string jsonfile
         {
             get
@@ -45,6 +46,7 @@ namespace Cloudforce
         {
             var results = JsonConvert.DeserializeObject<Root>(jsonfile);
             Allappslbl.Text = String.Format("All Apps ({0})", results.Apps.Count);
+            AllAppsCount = results.Apps.Count;
             for (int i = 0; i < 24; i++)
             {
                 int iOne = i;
@@ -63,9 +65,9 @@ namespace Cloudforce
                         imagebutton.HoverState.Image = Image.FromStream(ms);
 
                     }
-                    if (results.Apps[i].Category == "Windows Utilities") { imagebutton.Tag = "Windows Utilities"; }
-                    if (results.Apps[i].Category == "Multimedia Utilities") { imagebutton.Tag = "Multimedia Utilities"; }
-                    if (results.Apps[i].Category == "Web Browsers") { imagebutton.Tag = "Web Browsers"; }
+                    if (results.Apps[i].Category == "Windows Utilities") { Panellabel.Tag = "Windows Utilities"; }
+                    if (results.Apps[i].Category == "Multimedia Utilities") { Panellabel.Tag = "Multimedia Utilities"; }
+                    if (results.Apps[i].Category == "Web Browsers") { Panellabel.Tag = "Web Browsers"; }
                 }
                 else
                 {
@@ -89,9 +91,9 @@ namespace Cloudforce
                         var PictureBLoxie = (Guna.UI2.WinForms.Guna2Panel)Controls.Find("App" + (iOne + iTwo).ToString() + "Panel", true)[0];
                         PictureBLoxie.Name = results.Apps[i].Appname;
 
-                        if (results.Apps[i].Category == "Windows Utilities"){ imagebutton.Tag = "Windows Utilities";}
-                        if (results.Apps[i].Category == "Multimedia Utilities") { imagebutton.Tag = "Multimedia Utilities"; }
-                        if (results.Apps[i].Category == "Web Browsers") { imagebutton.Tag = "Web Browsers"; }
+                        if (results.Apps[i].Category == "Windows Utilities"){ PictureBLoxie.Tag = "Windows Utilities";}
+                        if (results.Apps[i].Category == "Multimedia Utilities") { PictureBLoxie.Tag = "Multimedia Utilities"; }
+                        if (results.Apps[i].Category == "Web Browsers") { PictureBLoxie.Tag = "Web Browsers"; }
                         
                         
 
@@ -329,10 +331,7 @@ namespace Cloudforce
 
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void guna2Button10_Click(object sender, EventArgs e)
         {
@@ -345,12 +344,14 @@ namespace Cloudforce
         private void guna2Button8_Click(object sender, EventArgs e)
         {
             guna2TabControl1.SelectedIndex = 1;
+            Allappslbl.Text = String.Format("All Apps ({0})", AllAppsCount);
             guna2Transition1.ShowSync(guna2TabControl1);
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             guna2TabControl1.SelectedIndex = 1;
+            Allappslbl.Text = String.Format("All Apps ({0})", AllAppsCount);
             guna2Transition1.ShowSync(guna2TabControl1);
         }
         #endregion
@@ -413,13 +414,85 @@ namespace Cloudforce
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
-            if (!CloudChecker.GFN())
+            if (CloudChecker.GFN())
             {
                 IntPtr handle = Process.GetCurrentProcess().MainWindowHandle;
                 SetWindowText(handle, RandomString(7));
+                guna2Panel1.Visible = true;
 
             }
         }
         #endregion
+        int countapps;
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string compareTo = guna2TextBox1.Text.Trim().ToLower();
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                c.Visible = c.Name.ToLower().Contains(compareTo);
+            }
+        }
+        private void guna2Button5_Click(object sender, EventArgs e)
+        {
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                if (c.Tag == "Windows Utilities")
+                {
+                    c.Visible = true;
+                    countapps += 1;
+
+                }
+                else
+                {
+                    c.Visible = false;
+                }
+            }
+            Allappslbl.Text = string.Format("Windows Utilities ({0})", countapps);
+            countapps = 0;
+        }
+        private void guna2Button2_Click(object sender, EventArgs e)
+        {
+            
+            
+        }
+
+        private void guna2Button6_Click(object sender, EventArgs e)
+        {
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                if (c.Tag == "Multimedia Utilities")
+                {
+                    c.Visible = true;
+                    countapps += 1;
+                }
+                else
+                {
+                    c.Visible = false;
+                }
+
+            }
+            Allappslbl.Text = string.Format("Multimedia Utilities ({0})", countapps);
+            countapps = 0;
+        }
+
+        private void guna2Button7_Click(object sender, EventArgs e)
+        {
+
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                if (c.Tag == "Web Browsers")
+                {
+                    c.Visible = true;
+                    countapps += 1;
+                }
+                else
+                {
+                    c.Visible = false;
+                }
+                
+            }
+            Allappslbl.Text = string.Format("Web Browsers ({0})", countapps);
+            countapps = 0;
+        }
     }
 }
