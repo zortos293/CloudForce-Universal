@@ -26,10 +26,10 @@ namespace Cloudforce
         {
             InitializeComponent();
             paneldynamicloader();
-           
+
         }
         #region JSON/DYNAMIC Stuff
-        int AllAppsCount; 
+        int AllAppsCount;
         public string jsonfile
         {
             get
@@ -91,11 +91,11 @@ namespace Cloudforce
                         var PictureBLoxie = (Guna.UI2.WinForms.Guna2Panel)Controls.Find("App" + (iOne + iTwo).ToString() + "Panel", true)[0];
                         PictureBLoxie.Name = results.Apps[i].Appname;
 
-                        if (results.Apps[i].Category == "Windows Utilities"){ PictureBLoxie.Tag = "Windows Utilities";}
+                        if (results.Apps[i].Category == "Windows Utilities") { PictureBLoxie.Tag = "Windows Utilities"; }
                         if (results.Apps[i].Category == "Multimedia Utilities") { PictureBLoxie.Tag = "Multimedia Utilities"; }
                         if (results.Apps[i].Category == "Web Browsers") { PictureBLoxie.Tag = "Web Browsers"; }
-                        
-                        
+
+
 
                     }
                     else
@@ -116,7 +116,7 @@ namespace Cloudforce
         #region Download Stuff
         public string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
         // DefaultDownloadLocation = exe path
-        string zippath;        
+        string zippath;
         public string DefaultDownloadLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Apps\\";
         string downloadurl;
         string downloadextension;
@@ -126,7 +126,7 @@ namespace Cloudforce
         Stopwatch sw = new Stopwatch();
         public void Download(int i)
         {
-            
+
             var results = JsonConvert.DeserializeObject<Root>(jsonfile);
             LaunchLocation = results.Apps[i].LaunchLocation;
             DownloadApp = results.Apps[i].Appname;
@@ -143,7 +143,7 @@ namespace Cloudforce
                     else if (!string.IsNullOrEmpty(download.PortableZip))
                     {
                         downloadurl = download.PortableZip;
-                    }   
+                    }
 
                     if (downloadurl.Contains(".zip"))
                     {
@@ -188,62 +188,77 @@ namespace Cloudforce
                 }
             }
 
-           
-                using (var client = new WebClient())
-                {
 
-                    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                    sw.Start();
-                    this.BeginInvoke((MethodInvoker)delegate
-                    {
-                        guna2ProgressBar1.Value = 0;
-                        DownloadFileLBL.Visible = true;
-                        guna2ProgressBar1.Visible = true;
-                    });
+            using (var client = new WebClient())
+            {
+
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
+                client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
+                sw.Start();
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    guna2ProgressBar1.Value = 0;
+                    DownloadFileLBL.Visible = true;
+                    guna2ProgressBar1.Visible = true;
+                });
                 if (DefaultLocationCheck.Checked)
                 {
-                    client.DownloadFileAsync(new Uri(downloadurl), DefaultDownloadLocation + Path.GetFileName(downloadurl));
+                    try
+                    {
+                        client.DownloadFileAsync(new Uri(downloadurl), DefaultDownloadLocation + Path.GetFileName(downloadurl));
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Error : " + e.Message );
+                    }
                 }
                 else if (CustomLocationCheck.Checked)
                 {
                     if (string.IsNullOrEmpty(CustomLocationText.Text)) { MessageBox.Show("You dident Specify Custom Location"); return; }
-                    client.DownloadFileAsync(new Uri(downloadurl), CustomLocationText.Text + Path.GetFileName(downloadurl));
+                    try
+                    {
+                        client.DownloadFileAsync(new Uri(downloadurl), CustomLocationText.Text + Path.GetFileName(downloadurl));
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Error : " + e.Message);
+                    }
                 }
-               
+
             }
 
-            
+
         }
 
         async void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
 
             Thread.Sleep(100);
-            
-                   this.BeginInvoke((MethodInvoker)delegate
-                   {
-                       DownloadFileLBL.Text = string.Format("Downloading {1}  {0} MB/s", (e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds).ToString("0.00") , DownloadApp);
-                       double bytesIn = double.Parse(e.BytesReceived.ToString());
-                       double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                       double percentage = bytesIn / totalBytes * 100;
-                       guna2ProgressBar1.Value = int.Parse(Math.Truncate(percentage).ToString());
-                   });
-            
+
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                DownloadFileLBL.Text = string.Format("Downloading {1}  {0} MB/s", (e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds).ToString("0.00"), DownloadApp);
+                double bytesIn = double.Parse(e.BytesReceived.ToString());
+                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                double percentage = bytesIn / totalBytes * 100;
+                guna2ProgressBar1.Value = int.Parse(Math.Truncate(percentage).ToString());
+            });
+
         }
         void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            this.BeginInvoke((MethodInvoker)delegate {
+            this.BeginInvoke((MethodInvoker)delegate
+            {
                 DownloadFileLBL.Text = string.Format("Downloaded {0}", DownloadApp);
                 DownloadFileLBL.Visible = false;
                 guna2ProgressBar1.Visible = false;
-                
+
                 sw.Reset();
             });
 
             if (downloadextension.Contains(".zip"))
             {
-                
+
                 if (DefaultLocationCheck.Checked)
                 {
                     zippath = DefaultDownloadLocation;
@@ -254,9 +269,9 @@ namespace Cloudforce
                 }
                 using (var archive = ZipArchive.Open(zippath + Path.GetFileName(downloadurl)))
                 {
-                    foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
+                    foreach (var nentry in archive.Entries.Where(entry => !entry.IsDirectory))
                     {
-                        
+
                         try
                         {
                             entry.WriteToDirectory(DefaultDownloadLocation, new ExtractionOptions()
@@ -264,21 +279,21 @@ namespace Cloudforce
                                 ExtractFullPath = true,
                                 Overwrite = true
                             });
-                                              
+
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show("Couldent extract file \n An Error Accoured");
                             return;
                         }
-                        
+
                     }
                 }
             }
 
             Process.Start(zippath + LaunchLocation);
         }
-        
+
         #endregion
 
         #region UI Buttons
@@ -293,7 +308,7 @@ namespace Cloudforce
                     {
                         Download(0);
                     });
-                return;
+                    return;
                 case "App2image":
 
                     await Task.Run(() =>
@@ -325,26 +340,38 @@ namespace Cloudforce
 
             }
         }
-        
+
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-       
+
 
         private void guna2Button10_Click(object sender, EventArgs e)
         {
-           
+
             guna2TabControl1.SelectedIndex = 2;
             guna2Transition1.ShowSync(guna2TabControl1);
 
         }
-
+        private void guna2Button9_Click(object sender, EventArgs e)
+        {
+            guna2TabControl1.SelectedIndex = 3;
+            var html = Markdig.Markdown.ToHtml(new WebClient().DownloadString(new Uri("https://www.kahootflooder.me/Zortos/CF-Universal-API/News.md")));
+            webBrowser1.DocumentText = @"<body style='background - color:#3a4659;'>" + html;
+            webBrowser1.Document.ForeColor = Color.Blue;
+            guna2Transition1.ShowSync(guna2TabControl1);
+        }
         private void guna2Button8_Click(object sender, EventArgs e)
         {
             guna2TabControl1.SelectedIndex = 1;
             Allappslbl.Text = String.Format("All Apps ({0})", AllAppsCount);
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                c.Visible = true;
+
+            }
             guna2Transition1.ShowSync(guna2TabControl1);
         }
 
@@ -352,86 +379,14 @@ namespace Cloudforce
         {
             guna2TabControl1.SelectedIndex = 1;
             Allappslbl.Text = String.Format("All Apps ({0})", AllAppsCount);
-            guna2Transition1.ShowSync(guna2TabControl1);
-        }
-        #endregion
-       
-
-       
-        #region Settings
-
-  
-      
-        private void installermodecheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Portablemodecheck.Checked = false;
-            hiddenmodecheck.Checked = false;
-            installermodecheck.Checked = true;
-        }
-
-        private void hiddenmodecheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Portablemodecheck.Checked = false;
-            installermodecheck.Checked = false;
-            hiddenmodecheck.Checked = true;
-        }
-
-        private void Portablemodecheck_CheckedChanged(object sender, EventArgs e)
-        {
-
-            installermodecheck.Checked = false;
-            hiddenmodecheck.Checked = false;
-            Portablemodecheck.Checked = false;
-            Portablemodecheck.Checked = true;
-        }
-       
-
-        private void CustomLocationCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            DefaultLocationCheck.Checked = false;
-            CustomLocationCheck.Checked = true;
-            CustomLocationText.ReadOnly = false;
-        }
-        private void guna2CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            CustomLocationCheck.Checked = false;
-            DefaultLocationCheck.Checked = true;
-            CustomLocationText.ReadOnly = true;
-        }
-        #endregion
-        #region CHECKS CLOUDSERVICE
-        [DllImport("user32.dll")]
-        static extern int SetWindowText(IntPtr hWnd, string text);
-
-
-        private static Random random = new Random();
-
-        public static string RandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-        private void Form1_Shown(object sender, EventArgs e)
-        {
-            if (CloudChecker.GFN())
-            {
-                IntPtr handle = Process.GetCurrentProcess().MainWindowHandle;
-                SetWindowText(handle, RandomString(7));
-                guna2Panel1.Visible = true;
-
-            }
-        }
-        #endregion
-        int countapps;
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-        {
-            string compareTo = guna2TextBox1.Text.Trim().ToLower();
             foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
             {
-                c.Visible = c.Name.ToLower().Contains(compareTo);
+               c.Visible = true;
+
             }
+            guna2Transition1.ShowSync(guna2TabControl1);
         }
+
         private void guna2Button5_Click(object sender, EventArgs e)
         {
             foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
@@ -452,8 +407,8 @@ namespace Cloudforce
         }
         private void guna2Button2_Click(object sender, EventArgs e)
         {
-            
-            
+
+
         }
 
         private void guna2Button6_Click(object sender, EventArgs e)
@@ -489,10 +444,98 @@ namespace Cloudforce
                 {
                     c.Visible = false;
                 }
-                
+
             }
             Allappslbl.Text = string.Format("Web Browsers ({0})", countapps);
             countapps = 0;
         }
+        #endregion
+
+
+
+        #region Settings
+
+
+
+        private void installermodecheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Portablemodecheck.Checked = false;
+            hiddenmodecheck.Checked = false;
+            installermodecheck.Checked = true;
+        }
+
+        private void hiddenmodecheck_CheckedChanged(object sender, EventArgs e)
+        {
+            Portablemodecheck.Checked = false;
+            installermodecheck.Checked = false;
+            hiddenmodecheck.Checked = true;
+        }
+
+        private void Portablemodecheck_CheckedChanged(object sender, EventArgs e)
+        {
+
+            installermodecheck.Checked = false;
+            hiddenmodecheck.Checked = false;
+            Portablemodecheck.Checked = false;
+            Portablemodecheck.Checked = true;
+        }
+
+
+        private void CustomLocationCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            DefaultLocationCheck.Checked = false;
+            CustomLocationCheck.Checked = true;
+            CustomLocationText.ReadOnly = false;
+        }
+        private void guna2CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CustomLocationCheck.Checked = false;
+            DefaultLocationCheck.Checked = true;
+            CustomLocationText.ReadOnly = true;
+        }
+        #endregion
+        #region CHECKS CLOUDSERVICE
+        [DllImport("user32.dll")]
+        static extern int SetWindowText(IntPtr hWnd, string text);
+
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            if (CloudChecker.GFN())
+            {
+                IntPtr handle = Process.GetCurrentProcess().MainWindowHandle;
+                SetWindowText(handle, RandomString(7));
+                Portablemodecheck.Checked = false;
+                hiddenmodecheck.Checked = true;
+                guna2Panel1.Visible = true;
+
+            }
+        }
+        #endregion
+        int countapps;
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string compareTo = guna2TextBox1.Text.Trim().ToLower();
+            foreach (Guna.UI2.WinForms.Guna2Panel c in flowLayoutPanel1.Controls.OfType<Guna.UI2.WinForms.Guna2Panel>())
+            {
+                c.Visible = c.Name.ToLower().Contains(compareTo);
+            }
+        }
+       
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+
+       
     }
 }

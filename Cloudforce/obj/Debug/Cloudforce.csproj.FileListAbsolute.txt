@@ -52,3 +52,5 @@ C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Clo
 C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\obj\Debug\Cloudforce.pdb
 C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Resources\NunitoSans-Bold.ttf
 C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Resources\NunitoSans-Regular.ttf
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Markdig.dll
+C:\Users\Admin\Documents\Cloudforce Universal\zortos293\CloudForce-Universal\Cloudforce\bin\Debug\Markdig.xml

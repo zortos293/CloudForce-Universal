@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Guna.UI2.AnimatorNS.Animation animation10 = new Guna.UI2.AnimatorNS.Animation();
+            Guna.UI2.AnimatorNS.Animation animation1 = new Guna.UI2.AnimatorNS.Animation();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.guna2ProgressBar1 = new Guna.UI2.WinForms.Guna2ProgressBar();
@@ -80,6 +80,11 @@
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Transition1 = new Guna.UI2.WinForms.Guna2Transition();
             this.guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(this.components);
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.GFN = new System.Windows.Forms.TabPage();
+            this.Cloud = new System.Windows.Forms.TabPage();
+            this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2Button11 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2ShadowPanel1.SuspendLayout();
             this.guna2TabControl1.SuspendLayout();
             this.AllApps.SuspendLayout();
@@ -90,7 +95,9 @@
             this.App4Panel.SuspendLayout();
             this.App5Panel.SuspendLayout();
             this.Settings.SuspendLayout();
+            this.News.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
+            this.GFN.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2ShadowPanel1
@@ -259,7 +266,7 @@
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.Size = new System.Drawing.Size(202, 26);
             this.guna2Button4.TabIndex = 4;
-            this.guna2Button4.Text = "Nware Utilities\n";
+            this.guna2Button4.Text = "Cloud Service Utilities\n";
             this.guna2Button4.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.guna2Button4.TextOffset = new System.Drawing.Point(5, -1);
             // 
@@ -356,6 +363,7 @@
             this.guna2Button9.Size = new System.Drawing.Size(108, 26);
             this.guna2Button9.TabIndex = 12;
             this.guna2Button9.Text = "News";
+            this.guna2Button9.Click += new System.EventHandler(this.guna2Button9_Click);
             // 
             // guna2Button10
             // 
@@ -417,6 +425,8 @@
             this.guna2TabControl1.Controls.Add(this.AllApps);
             this.guna2TabControl1.Controls.Add(this.Settings);
             this.guna2TabControl1.Controls.Add(this.News);
+            this.guna2TabControl1.Controls.Add(this.GFN);
+            this.guna2TabControl1.Controls.Add(this.Cloud);
             this.guna2Transition1.SetDecoration(this.guna2TabControl1, Guna.UI2.AnimatorNS.DecorationType.None);
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(180, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(259, 59);
@@ -460,10 +470,10 @@
             this.AllApps.Controls.Add(this.flowLayoutPanel1);
             this.guna2Transition1.SetDecoration(this.AllApps, Guna.UI2.AnimatorNS.DecorationType.None);
             this.AllApps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
-            this.AllApps.Location = new System.Drawing.Point(5, 4);
+            this.AllApps.Location = new System.Drawing.Point(184, 4);
             this.AllApps.Name = "AllApps";
             this.AllApps.Padding = new System.Windows.Forms.Padding(3);
-            this.AllApps.Size = new System.Drawing.Size(851, 521);
+            this.AllApps.Size = new System.Drawing.Size(672, 521);
             this.AllApps.TabIndex = 0;
             this.AllApps.Text = "All Apps";
             // 
@@ -640,10 +650,10 @@
             this.Settings.Controls.Add(this.installermodecheck);
             this.Settings.Controls.Add(this.guna2HtmlLabel5);
             this.guna2Transition1.SetDecoration(this.Settings, Guna.UI2.AnimatorNS.DecorationType.None);
-            this.Settings.Location = new System.Drawing.Point(5, 4);
+            this.Settings.Location = new System.Drawing.Point(184, 4);
             this.Settings.Name = "Settings";
             this.Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.Settings.Size = new System.Drawing.Size(851, 521);
+            this.Settings.Size = new System.Drawing.Size(672, 521);
             this.Settings.TabIndex = 1;
             this.Settings.Text = "Settings";
             // 
@@ -795,10 +805,11 @@
             // News
             // 
             this.News.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
+            this.News.Controls.Add(this.webBrowser1);
             this.guna2Transition1.SetDecoration(this.News, Guna.UI2.AnimatorNS.DecorationType.None);
-            this.News.Location = new System.Drawing.Point(5, 4);
+            this.News.Location = new System.Drawing.Point(184, 4);
             this.News.Name = "News";
-            this.News.Size = new System.Drawing.Size(851, 521);
+            this.News.Size = new System.Drawing.Size(672, 521);
             this.News.TabIndex = 3;
             this.News.Text = "News";
             // 
@@ -860,22 +871,22 @@
             // 
             this.guna2Transition1.AnimationType = Guna.UI2.AnimatorNS.AnimationType.Leaf;
             this.guna2Transition1.Cursor = null;
-            animation10.AnimateOnlyDifferences = true;
-            animation10.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation10.BlindCoeff")));
-            animation10.LeafCoeff = 1F;
-            animation10.MaxTime = 1F;
-            animation10.MinTime = 0F;
-            animation10.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation10.MosaicCoeff")));
-            animation10.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation10.MosaicShift")));
-            animation10.MosaicSize = 0;
-            animation10.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
-            animation10.RotateCoeff = 0F;
-            animation10.RotateLimit = 0F;
-            animation10.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation10.ScaleCoeff")));
-            animation10.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation10.SlideCoeff")));
-            animation10.TimeCoeff = 0F;
-            animation10.TransparencyCoeff = 0F;
-            this.guna2Transition1.DefaultAnimation = animation10;
+            animation1.AnimateOnlyDifferences = true;
+            animation1.BlindCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.BlindCoeff")));
+            animation1.LeafCoeff = 1F;
+            animation1.MaxTime = 1F;
+            animation1.MinTime = 0F;
+            animation1.MosaicCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicCoeff")));
+            animation1.MosaicShift = ((System.Drawing.PointF)(resources.GetObject("animation1.MosaicShift")));
+            animation1.MosaicSize = 0;
+            animation1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            animation1.RotateCoeff = 0F;
+            animation1.RotateLimit = 0F;
+            animation1.ScaleCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.ScaleCoeff")));
+            animation1.SlideCoeff = ((System.Drawing.PointF)(resources.GetObject("animation1.SlideCoeff")));
+            animation1.TimeCoeff = 0F;
+            animation1.TransparencyCoeff = 0F;
+            this.guna2Transition1.DefaultAnimation = animation1;
             this.guna2Transition1.TimeStep = 0.05F;
             // 
             // guna2AnimateWindow1
@@ -883,6 +894,71 @@
             this.guna2AnimateWindow1.AnimationType = Guna.UI2.WinForms.Guna2AnimateWindow.AnimateWindowType.AW_BLEND;
             this.guna2AnimateWindow1.Interval = 300;
             this.guna2AnimateWindow1.TargetForm = this;
+            // 
+            // webBrowser1
+            // 
+            this.guna2Transition1.SetDecoration(this.webBrowser1, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(672, 521);
+            this.webBrowser1.TabIndex = 0;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
+            // 
+            // GFN
+            // 
+            this.GFN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
+            this.GFN.Controls.Add(this.guna2Button11);
+            this.GFN.Controls.Add(this.guna2HtmlLabel6);
+            this.guna2Transition1.SetDecoration(this.GFN, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.GFN.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
+            this.GFN.Location = new System.Drawing.Point(5, 4);
+            this.GFN.Name = "GFN";
+            this.GFN.Size = new System.Drawing.Size(851, 521);
+            this.GFN.TabIndex = 4;
+            this.GFN.Text = "GFN";
+            // 
+            // Cloud
+            // 
+            this.Cloud.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
+            this.guna2Transition1.SetDecoration(this.Cloud, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.Cloud.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(12)))), ((int)(((byte)(15)))), ((int)(((byte)(39)))));
+            this.Cloud.Location = new System.Drawing.Point(184, 4);
+            this.Cloud.Name = "Cloud";
+            this.Cloud.Size = new System.Drawing.Size(672, 521);
+            this.Cloud.TabIndex = 5;
+            this.Cloud.Text = "CLOUD";
+            // 
+            // guna2HtmlLabel6
+            // 
+            this.guna2HtmlLabel6.BackColor = System.Drawing.Color.Transparent;
+            this.guna2Transition1.SetDecoration(this.guna2HtmlLabel6, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2HtmlLabel6.Font = new System.Drawing.Font("Nunito Sans", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.guna2HtmlLabel6.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel6.Location = new System.Drawing.Point(15, 15);
+            this.guna2HtmlLabel6.Name = "guna2HtmlLabel6";
+            this.guna2HtmlLabel6.Size = new System.Drawing.Size(127, 32);
+            this.guna2HtmlLabel6.TabIndex = 12;
+            this.guna2HtmlLabel6.Text = "GFN Utilities";
+            this.guna2HtmlLabel6.Visible = false;
+            // 
+            // guna2Button11
+            // 
+            this.guna2Button11.BorderRadius = 5;
+            this.guna2Transition1.SetDecoration(this.guna2Button11, Guna.UI2.AnimatorNS.DecorationType.None);
+            this.guna2Button11.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.guna2Button11.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.guna2Button11.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.guna2Button11.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(36)))), ((int)(((byte)(59)))));
+            this.guna2Button11.Font = new System.Drawing.Font("Nunito Sans", 11F, System.Drawing.FontStyle.Bold);
+            this.guna2Button11.ForeColor = System.Drawing.Color.White;
+            this.guna2Button11.Location = new System.Drawing.Point(15, 470);
+            this.guna2Button11.Name = "guna2Button11";
+            this.guna2Button11.Size = new System.Drawing.Size(164, 32);
+            this.guna2Button11.TabIndex = 13;
+            this.guna2Button11.Text = "All Apps";
             // 
             // Form1
             // 
@@ -920,8 +996,11 @@
             this.App5Panel.ResumeLayout(false);
             this.Settings.ResumeLayout(false);
             this.Settings.PerformLayout();
+            this.News.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
+            this.GFN.ResumeLayout(false);
+            this.GFN.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -977,6 +1056,11 @@
         private Guna.UI2.WinForms.Guna2CheckBox CustomLocationCheck;
         private Guna.UI2.WinForms.Guna2Transition guna2Transition1;
         private Guna.UI2.WinForms.Guna2AnimateWindow guna2AnimateWindow1;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TabPage GFN;
+        private Guna.UI2.WinForms.Guna2Button guna2Button11;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
+        private System.Windows.Forms.TabPage Cloud;
     }
 }
 
