@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sentry;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -24,8 +25,17 @@ namespace Cloudforce
 
         static void Main()
         {
-          
-           
+
+            SentrySdk.Init(o =>
+            {
+                // Tells which project in Sentry to send events to:
+                o.Dsn = "https://764b6762054a498098fa542f8bd7cf23@o1302473.ingest.sentry.io/6539929";
+                // When configuring for the first time, to see what the SDK is doing:
+                o.Debug = true;
+                // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+                // We recommend adjusting this value in production.
+                o.TracesSampleRate = 1.0;
+            });
 
 
 
@@ -50,8 +60,7 @@ namespace Cloudforce
                                                       "Font installed successfully.");
                 }
             }
-           
-            
+
             
             Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Apps");
             Application.EnableVisualStyles();

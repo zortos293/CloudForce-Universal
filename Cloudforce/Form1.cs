@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SharpCompress.Archives;
-using SharpCompress.Archives.Zip;
-using SharpCompress.Common;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,15 +28,22 @@ namespace Cloudforce
         }
         #region JSON/DYNAMIC Stuff
         int AllAppsCount;
-        public string jsonfile
+        public class Globals
+        {
+            public static Form1 form;
+        }
+
+        Downloader downloader = new Downloader();
+        public static string jsonfile  // Need to change < (Important)
         {
             get
             {
-                WebRequest request = WebRequest.Create("https://www.kahootflooder.me/Zortos/CF-Universal-API/tools.geojson");
+                WebRequest request = WebRequest.CreateHttp("https://zortos293.github.io/ZortosMainSite/CF-Universal-API/tools.json");
                 WebResponse response = request.GetResponse();
                 Stream dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream);
                 string responseFromServer = reader.ReadToEnd();
+               // string responseFromServer = File.ReadAllText("C:\\test.json");
                 return responseFromServer;
             }
         }
@@ -54,10 +59,10 @@ namespace Cloudforce
                 if (i == 0)
                 {
                     var Panellabel = (Guna.UI2.WinForms.Guna2Panel)Controls.Find("App" + "1" + "Panel", true)[0];
-                    Panellabel.Name = results.Apps[i].Appname;
+                    Panellabel.Name = results.Apps[i].Name;
                     var imagebutton = (Guna.UI2.WinForms.Guna2ImageButton)Controls.Find("App" + "1" + "image", true)[0];
                     var webClient = new WebClient();
-                    byte[] imageBytes = webClient.DownloadData(results.Apps[i].AppBanner);
+                    byte[] imageBytes = webClient.DownloadData(results.Apps[i].Banner);
                     using (var ms = new MemoryStream(imageBytes))
                     {
                         imagebutton.Image = Image.FromStream(ms);
@@ -73,13 +78,13 @@ namespace Cloudforce
                 {
                     if (results.Apps.Count > i)
                     {
-                        if (results.Apps[i].AppBanner == null)
+                        if (results.Apps[i].Banner == null)
                         {
                             return;
                         }
                         var imagebutton = (Guna.UI2.WinForms.Guna2ImageButton)Controls.Find("App" + (iOne + iTwo).ToString() + "image", true)[0];
                         var webClient = new WebClient();
-                        byte[] imageBytes = webClient.DownloadData(results.Apps[i].AppBanner);
+                        byte[] imageBytes = webClient.DownloadData(results.Apps[i].Banner);
                         using (var ms = new MemoryStream(imageBytes))
                         {
                             imagebutton.Image = Image.FromStream(ms);
@@ -89,7 +94,7 @@ namespace Cloudforce
                         }
 
                         var PictureBLoxie = (Guna.UI2.WinForms.Guna2Panel)Controls.Find("App" + (iOne + iTwo).ToString() + "Panel", true)[0];
-                        PictureBLoxie.Name = results.Apps[i].Appname;
+                        PictureBLoxie.Name = results.Apps[i].Name;
 
                         if (results.Apps[i].Category == "Windows Utilities") { PictureBLoxie.Tag = "Windows Utilities"; }
                         if (results.Apps[i].Category == "Multimedia Utilities") { PictureBLoxie.Tag = "Multimedia Utilities"; }
@@ -113,188 +118,7 @@ namespace Cloudforce
 
         #endregion
 
-        #region Download Stuff
-        public string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-        // DefaultDownloadLocation = exe path
-        string zippath;
-        public string DefaultDownloadLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Apps\\";
-        string downloadurl;
-        string downloadextension;
-        string DownloadApp;
-        string DownloadLocaiton;
-        string LaunchLocation;
-        Stopwatch sw = new Stopwatch();
-        public void Download(int i)
-        {
-
-            var results = JsonConvert.DeserializeObject<Root>(jsonfile);
-            LaunchLocation = results.Apps[i].LaunchLocation;
-            DownloadApp = results.Apps[i].Appname;
-            if (Portablemodecheck.Checked)
-            {
-                // Foreach all downloads from results.Apps
-                foreach (var download in results.Apps[i].DownloadMain)
-                {
-                    if (string.IsNullOrEmpty(download.PortableZip) && string.IsNullOrEmpty(download.PortableExe)) { return; }
-                    if (!string.IsNullOrEmpty(download.PortableExe))
-                    {
-                        downloadurl = download.PortableExe;
-                    }
-                    else if (!string.IsNullOrEmpty(download.PortableZip))
-                    {
-                        downloadurl = download.PortableZip;
-                    }
-
-                    if (downloadurl.Contains(".zip"))
-                    {
-                        downloadextension = ".zip";
-                    }
-                    else if (downloadurl.Contains(".exe"))
-                    {
-                        downloadextension = ".exe";
-                    }
-
-
-
-                    // If the download is the one we want to download
-                }
-            }
-            else if (installermodecheck.Checked)
-            {
-                foreach (var download in results.Apps[i].DownloadMain)
-                {
-                    if (string.IsNullOrEmpty(download.SetupMSI) && string.IsNullOrEmpty(download.SetupExe)) { return; }
-                    if (!string.IsNullOrEmpty(download.SetupMSI))
-                    {
-                        downloadurl = download.SetupMSI;
-                    }
-                    else if (!string.IsNullOrEmpty(download.SetupExe))
-                    {
-                        downloadurl = download.SetupExe;
-                    }
-
-                    if (downloadurl.Contains(".zip"))
-                    {
-                        downloadextension = ".zip";
-                    }
-                    else if (downloadurl.Contains(".exe"))
-                    {
-                        downloadextension = ".exe";
-                    }
-
-
-
-                    // If the download is the one we want to download
-                }
-            }
-
-
-            using (var client = new WebClient())
-            {
-
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                sw.Start();
-                this.BeginInvoke((MethodInvoker)delegate
-                {
-                    guna2ProgressBar1.Value = 0;
-                    DownloadFileLBL.Visible = true;
-                    guna2ProgressBar1.Visible = true;
-                });
-                if (DefaultLocationCheck.Checked)
-                {
-                    try
-                    {
-                        client.DownloadFileAsync(new Uri(downloadurl), DefaultDownloadLocation + Path.GetFileName(downloadurl));
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Error : " + e.Message );
-                    }
-                }
-                else if (CustomLocationCheck.Checked)
-                {
-                    if (string.IsNullOrEmpty(CustomLocationText.Text)) { MessageBox.Show("You dident Specify Custom Location"); return; }
-                    try
-                    {
-                        client.DownloadFileAsync(new Uri(downloadurl), CustomLocationText.Text + Path.GetFileName(downloadurl));
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Error : " + e.Message);
-                    }
-                }
-
-            }
-
-
-        }
-
-        async void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-
-            Thread.Sleep(100);
-
-            this.BeginInvoke((MethodInvoker)delegate
-            {
-                DownloadFileLBL.Text = string.Format("Downloading {1}  {0} MB/s", (e.BytesReceived / 1024d / 1024d / sw.Elapsed.TotalSeconds).ToString("0.00"), DownloadApp);
-                double bytesIn = double.Parse(e.BytesReceived.ToString());
-                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                double percentage = bytesIn / totalBytes * 100;
-                guna2ProgressBar1.Value = int.Parse(Math.Truncate(percentage).ToString());
-            });
-
-        }
-        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            this.BeginInvoke((MethodInvoker)delegate
-            {
-                DownloadFileLBL.Text = string.Format("Downloaded {0}", DownloadApp);
-                DownloadFileLBL.Visible = false;
-                guna2ProgressBar1.Visible = false;
-
-                sw.Reset();
-            });
-
-            if (downloadextension.Contains(".zip"))
-            {
-
-                if (DefaultLocationCheck.Checked)
-                {
-                    zippath = DefaultDownloadLocation;
-                }
-                else if (CustomLocationCheck.Checked)
-                {
-                    zippath = CustomLocationText.Text;
-                }
-                using (var archive = ZipArchive.Open(zippath + Path.GetFileName(downloadurl)))
-                {
-                    foreach (var nentry in archive.Entries.Where(entry => !entry.IsDirectory))
-                    {
-
-                        try
-                        {
-                            entry.WriteToDirectory(DefaultDownloadLocation, new ExtractionOptions()
-                            {
-                                ExtractFullPath = true,
-                                Overwrite = true
-                            });
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Couldent extract file \n An Error Accoured");
-                            return;
-                        }
-
-                    }
-                }
-            }
-
-            Process.Start(zippath + LaunchLocation);
-        }
-
-        #endregion
+ 
 
         #region UI Buttons
         public async void UIBTNPressed(object sender, EventArgs e)
@@ -306,35 +130,35 @@ namespace Cloudforce
 
                     await Task.Run(() =>
                     {
-                        Download(0);
+                        downloader.Download(0);
                     });
                     return;
                 case "App2image":
 
                     await Task.Run(() =>
                     {
-                        Download(1);
+                        downloader.Download(1);
                     });
                     return;
                 case "App3image":
 
                     await Task.Run(() =>
                     {
-                        Download(2);
+                        downloader.Download(2);
                     });
                     return;
                 case "App4image":
 
                     await Task.Run(() =>
                     {
-                        Download(3);
+                        downloader.Download(3);
                     });
                     return;
                 case "App5image":
 
                     await Task.Run(() =>
                     {
-                        Download(4);
+                        downloader.Download(4);
                     });
                     return;
 
@@ -374,7 +198,17 @@ namespace Cloudforce
             }
             guna2Transition1.ShowSync(guna2TabControl1);
         }
-
+        private void guna2Button3_Click(object sender, EventArgs e)
+        {
+            if (CloudChecker.GFN())
+            {
+                guna2TabControl1.SelectedIndex = 4;
+            }
+            else
+            {
+                MessageBox.Show("ONLY For GFN Session");
+            }
+        }
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             guna2TabControl1.SelectedIndex = 1;
@@ -457,24 +291,19 @@ namespace Cloudforce
 
 
 
-        private void installermodecheck_CheckedChanged(object sender, EventArgs e)
-        {
-            Portablemodecheck.Checked = false;
-            hiddenmodecheck.Checked = false;
-            installermodecheck.Checked = true;
-        }
+       
 
         private void hiddenmodecheck_CheckedChanged(object sender, EventArgs e)
         {
             Portablemodecheck.Checked = false;
-            installermodecheck.Checked = false;
+           
             hiddenmodecheck.Checked = true;
         }
 
         private void Portablemodecheck_CheckedChanged(object sender, EventArgs e)
         {
 
-            installermodecheck.Checked = false;
+            
             hiddenmodecheck.Checked = false;
             Portablemodecheck.Checked = false;
             Portablemodecheck.Checked = true;
@@ -536,6 +365,21 @@ namespace Cloudforce
 
         }
 
-       
+        private void guna2Button11_Click(object sender, EventArgs e)
+        {
+            WebClient WebDL = new WebClient();
+             WebDL.DownloadFile(new Uri(""), downloader.DefaultDownloadLocation + "ZortosDesktop.exe");
+
+        }
+
+        private void guna2Button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Globals.form = this;
+        }
     }
 }

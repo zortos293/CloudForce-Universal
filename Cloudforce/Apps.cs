@@ -7,46 +7,29 @@ using System.Threading.Tasks;
 
 namespace Cloudforce
 {
-    internal class Apps
-    {
-    }
-
-
     public class App
     {
-        public string Appname { get; set; }
-        public string AppLink { get; set; }
-        public string DownloadServer { get; set; }
-        public List<DownloadMain> DownloadMain { get; set; }
-        public string Admin { get; set; }
-        public string Category { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Banner { get; set; }
         public string Version { get; set; }
-        public string AppBanner { get; set; }
-        public string LaunchLocation { get; set; }
+        public List<DownloadLink> DownloadLinks { get; set; }
+        public bool NeedAdmin { get; set; }
+        public string Category { get; set; }
     }
 
-    public class DownloadMain
+    public class DownloadLink
     {
-        [JsonProperty("Setup Exe")]
-        public string SetupExe { get; set; }
-
-        [JsonProperty("Setup MSI")]
-        public string SetupMSI { get; set; }
-
-        [JsonProperty("Portable Setup")]
-        public string PortableSetup { get; set; }
-
-        [JsonProperty("Portable Zip")]
-        public string PortableZip { get; set; }
-
-        [JsonProperty("Portable Exe")]
-        public string PortableExe { get; set; }
+        public string Name { get; set; }
+        public List<string> Links { get; set; }
+        public string Exelocation { get; set; }
     }
 
     public class Root
     {
         public List<App> Apps { get; set; }
     }
+
 
 
 
