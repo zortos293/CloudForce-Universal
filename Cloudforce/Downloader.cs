@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sentry;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Zip;
 using SharpCompress.Common;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,6 +23,19 @@ namespace Cloudforce
     internal class Downloader
     {
         // DefaultDownloadLocation = exe path
+        [DllImport("user32.dll")]
+        static extern int SetWindowText(IntPtr hWnd, string text); // Hide Exe that launches
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+
         public string DefaultDownloadLocation = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Apps\\";
 
         private Stopwatch sw = new Stopwatch();
@@ -46,17 +61,74 @@ namespace Cloudforce
             ApplicationName = results.Apps[i].Name;
             if (Globals.form.Portablemodecheck.Checked || Globals.form.hiddenmodecheck.Checked)
             {
+              
                 // Change THIS ^^
                 if (!string.IsNullOrEmpty(results.Apps[i].DownloadLinks[0].Exelocation))
                 {
+                    if (Globals.form.CustomLocationCheck.Checked)
+                    {
+                        // Checking if file exists 
+                        if (File.Exists(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation))
+                        {
+                            Process p = Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                            Thread.Sleep(200);
+                            SetWindowText(p.MainWindowHandle, RandomString(9));
+                            return;
+                        }
+
+                    }
+                    else if (Globals.form.DefaultLocationCheck.Checked)
+                    {
+                        if (File.Exists(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation))
+                        {
+                            Process p = Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                            Thread.Sleep(200);
+                            SetWindowText(p.MainWindowHandle, RandomString(9));
+                            return;
+                        }
+                        // Checking if file exists 
+                    }
                     await checklinks(i, 0);
                     iszip = true;
                 }
                 else if (!string.IsNullOrEmpty(results.Apps[i].DownloadLinks[1].Exelocation))
                 {
+                    if (Globals.form.CustomLocationCheck.Checked)
+                    {
+                        // Checking if file exists 
+                        if (File.Exists(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation))
+                        {
+                            Process p = Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                            Thread.Sleep(100);  
+                            SetWindowText(p.MainWindowHandle, RandomString(9));
+                            return;
+                        }
+
+                    }
+                    else if (Globals.form.DefaultLocationCheck.Checked) 
+                    {
+                        if (File.Exists(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation))
+                        {
+                            Process p = Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                            Thread.Sleep(100);  
+                            SetWindowText(p.MainWindowHandle, RandomString(9));
+                            return;
+                        }
+                        // Checking if file exists 
+                       
+                       
+                    }
+                   
+
+
+
+
                     await checklinks(i, 1);
+                        isexe = true;
                     
-                    isexe = true;
+                    
+                    
+                   
                 }
 
                 // If the download is the one we want to download
@@ -145,6 +217,7 @@ namespace Cloudforce
             var results = JsonConvert.DeserializeObject<Root>(Form1.jsonfile);
             if (iszip)
             {
+                
                 if (Globals.form.DefaultLocationCheck.Checked)
                 {
                     zippath = DefaultDownloadLocation;
@@ -171,6 +244,7 @@ namespace Cloudforce
                                 ExtractFullPath = true,
                                 Overwrite = true
                             });
+                            
                         }
                         catch (Exception)
                         {
@@ -180,26 +254,72 @@ namespace Cloudforce
                         }
                     }
                 }
+                
                 if (Globals.form.CustomLocationCheck.Checked)
                 {
-                    Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                    try
+                    {
+                        Process p = Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                        Thread.Sleep(100);  // <-- ugly hack
+                        SetWindowText(p.MainWindowHandle, RandomString(9));
+                    }
+                    catch (Exception ex)
+                    {
+                        SentrySdk.CaptureException(ex);
+                        MessageBox.Show("Exe Failed to Launch \nCrash report has been send");
+                    }
                 }
                 else
                 {
-                    Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                    
+                    try
+                    {
+                        Process p = Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[0].Exelocation);
+                        Thread.Sleep(100);  // <-- ugly hack
+                        SetWindowText(p.MainWindowHandle, RandomString(9));
+                    }
+                    catch (Exception ex)
+                    {
+                        SentrySdk.CaptureException(ex);
+                        MessageBox.Show("Exe Failed to Launch \nCrash report has been send");
+                    }
+                    
+                   
                 }
                 iszip = false;
+                DownloadLink = "";
                 return;
             }
             else if (isexe)
             {
+                DownloadLink = "";
                 if (Globals.form.CustomLocationCheck.Checked)
                 {
-                    Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                    try
+                    {
+                        Process p = Process.Start(Globals.form.CustomLocationText.Text + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                        Thread.Sleep(100);  // <-- ugly hack
+                        SetWindowText(p.MainWindowHandle, RandomString(9));
+                    }
+                    catch (Exception ex)
+                    {
+                        SentrySdk.CaptureException(ex);
+                        MessageBox.Show("Exe Failed to Launch \nCrash report has been send");
+                    }
                 }
                 else
                 {
-                    Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                    try
+                    {
+                        Process p = Process.Start(DefaultDownloadLocation + results.Apps[DownloadNumber].DownloadLinks[1].Exelocation);
+                        Thread.Sleep(100);  // <-- ugly hack
+                        SetWindowText(p.MainWindowHandle, RandomString(9));
+                    }
+                    catch (Exception ex)
+                    {
+                        SentrySdk.CaptureException(ex);
+                        MessageBox.Show("Exe Failed to Launch \nCrash report has been send");
+                    }
                 }
                 isexe = false;
                 return;
